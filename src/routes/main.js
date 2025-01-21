@@ -6,11 +6,21 @@ const {
   verifyJWTAndDevice,
   logout,
 } = require("./Auth/UserAuth");
+const { addUserDevices, getDevices, deleteDevices } = require("./userDevices/userDevices");
+const { getUserProfile, UpdateUserProfile, VerifiPasword } = require("./Profile/userProfile");
 const router = express.Router();
 
 router.post("/auth/Signup", SignUp);
 router.post("/auth/login", Login);
 router.get("/auth/user/verif", verifyJWTAndDevice);
 router.get("/auth/user/logout", verifyDevice, logout);
+
+router.put("/user/devices/addDevices/:custommerId",addUserDevices);
+router.get("/user/devices/getdevices",getDevices)
+router.delete("/user/devices/deleteuser/:custommerId",deleteDevices)
+
+router.get("/user/profile/:custommerId",getUserProfile);
+router.put("/user/profile/:custommerId",UpdateUserProfile);
+router.get("/user/profile/verifi/auth/:custommerId",VerifiPasword)
 
 module.exports = router;
