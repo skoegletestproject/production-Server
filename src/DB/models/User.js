@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
   phoneNumber: { type: String, required: true },
   device: { type: Array, default: [] },
   isAdmin: { type: Boolean, default: false },
-  custommerId: { type: String, required: true, unique: true },
+  custommerId: { type: String, required: true },
 });
 
 const User = mongoose.model("DraftUser", userSchema);

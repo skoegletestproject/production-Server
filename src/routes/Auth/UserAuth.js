@@ -5,8 +5,8 @@ const crypto = require("crypto");
 
 const Login = async (req, res) => {
   try {
-    const { email, password, devicedetails } = req.body;
-
+    const { email, password,devicedetails } = req.body;
+// console.log("sdjkfjas",{deviceDetails})
     if(!email || !password||!devicedetails){
       return res.send({message:"email and  paswword are required"})
     }
@@ -30,7 +30,8 @@ const Login = async (req, res) => {
     const newDevice = new DeviceToken({
       custommerId: user.custommerId,
       deviceString,
-      devicedetails,
+      devicedetails:JSON.stringify(devicedetails),
+      email:user.email
     });
 
     await newDevice.save();
@@ -40,7 +41,7 @@ const Login = async (req, res) => {
       process.env.JWT_SEC,
       { expiresIn: "2h" }
     );
-
+console.log(token)
     const isProduction = process.env.NODE_ENV === "production";
     res.cookie("auth_token", token, {
       httpOnly: true,
@@ -49,7 +50,7 @@ const Login = async (req, res) => {
       sameSite: isProduction ? "Strict" : "Lax",
     });
 
-    res.status(200).send({ message: "Login successful", valid: true, token });
+    res.status(200).send({ message: "Login successful", valid: true, token ,isAdmin:user.isAdmin});
   } catch (error) {
     console.error("Error in Login:", error);
     res
@@ -112,7 +113,9 @@ const verifyJWTAndDevice = async (req, res) => {
       custommerId,
       deviceString,
     });
-    console.log(validDevice)
+    // console.log(validDevice)
+    const userdata = await User.findOne({custommerId})
+    console.log(userdata)
     if (!validDevice) {
       res.clearCookie("auth_token", {
         httpOnly: true,
@@ -121,10 +124,10 @@ const verifyJWTAndDevice = async (req, res) => {
       });
       return res
         .status(401)
-        .send({ message: "Unauthorized: Invalid device", valid: false });
+        .send({ message: "Unauthorized: Invalid device", valid: false});
     }
 
-    res.send({ message: "User and device verified", valid: true });
+    res.send({ message: "User and device verified", valid: true ,isAdmin:userdata?.isAdmin });
   } catch (error) {
     console.error("Error in JWT or device verification:", error);
     res

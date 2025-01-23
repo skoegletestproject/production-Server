@@ -8,6 +8,7 @@ const {
 } = require("./Auth/UserAuth");
 const { addUserDevices, getDevices, deleteDevices } = require("./userDevices/userDevices");
 const { getUserProfile, UpdateUserProfile, VerifiPasword } = require("./Profile/userProfile");
+const { ListCustommerDevices } = require("./UserDeviceManage/Admin");
 const router = express.Router();
 
 router.post("/auth/Signup", SignUp);
@@ -23,4 +24,5 @@ router.get("/user/profile/:custommerId",getUserProfile);
 router.put("/user/profile/:custommerId",UpdateUserProfile);
 router.get("/user/profile/verifi/auth/:custommerId",VerifiPasword)
 
+router.get("/user/admin/device/management/:custommerId",ListCustommerDevices)
 module.exports = router;
