@@ -41,7 +41,7 @@ const Login = async (req, res) => {
       process.env.JWT_SEC,
       { expiresIn: "2h" }
     );
-console.log(token)
+// console.log(token)
     const isProduction = process.env.NODE_ENV === "production";
     res.cookie("auth_token", token, {
       httpOnly: true,
@@ -96,7 +96,7 @@ const SignUp = async (req, res) => {
 };
 
 const verifyJWTAndDevice = async (req, res) => {
-  const token = req.cookies.auth_token;
+  const token = req.cookies.auth_token || req?.query?.token
   console.log(token)
   try {
     if (!token) {
@@ -108,14 +108,14 @@ const verifyJWTAndDevice = async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SEC);
     const { custommerId, deviceString } = decoded;
 
-    console.log(deviceString)
+    // console.log(deviceString)
     const validDevice = await DeviceToken.findOne({
       custommerId,
       deviceString,
     });
     // console.log(validDevice)
     const userdata = await User.findOne({custommerId})
-    console.log(userdata)
+    // console.log(userdata)
     if (!validDevice) {
       res.clearCookie("auth_token", {
         httpOnly: true,
