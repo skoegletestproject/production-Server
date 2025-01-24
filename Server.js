@@ -14,7 +14,7 @@ app.use(morgan("dev"));
 app.use(
   cors({
     origin: function (origin, callback) {
-      const whitelist = ["http://localhost:5173", "https://geocam.skoegle.in"];
+      const whitelist = ["http://localhost:5173", "https://geocam.skoegle.in","https://production-client-5ahd.onrender.com/"];
       if (whitelist.indexOf(origin) !== -1 || !origin) {
         callback(null, true);
       } else {
