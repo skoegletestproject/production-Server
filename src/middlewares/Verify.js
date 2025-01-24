@@ -5,7 +5,7 @@ const DeviceToken = require("../DB/models/DeviceToken");
 
 const verifyDevice = async (req, res, next) => {
   const token = req.cookies.auth_token || req?.query?.token
-  // console.log(token);
+  console.log(token);
   try {
     if (!token) {
       return res

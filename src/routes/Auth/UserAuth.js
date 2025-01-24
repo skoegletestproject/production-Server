@@ -58,7 +58,6 @@ const Login = async (req, res) => {
       .send({ message: "An error occurred during login", valid: false });
   }
 };
-
 const SignUp = async (req, res) => {
   try {
     const { firstName, lastName, email, phoneNumber, password, custommerId } =
@@ -69,9 +68,28 @@ const SignUp = async (req, res) => {
       return res.send({ message: "User already exists", valid: false });
     }
 
-    const generatedCustomerId =
-      custommerId || `CUST-${crypto.randomInt(100000000, 999999999)}`;
-
+    // Generate or check for an existing custommerId
+    let generatedCustomerId = custommerId || `CUST-${crypto.randomInt(100000000, 999999999)}`;
+    
+    // Check if custommerId already exists in the collection
+    const existingUser = await User.findOne({ custommerId });
+    
+    // If custommerId exists, increment the number
+    if (existingUser) {
+      let versionNumber = 1;
+      let newCustommerId = `${generatedCustomerId}_${versionNumber}`;
+      
+      // Keep checking until we find a unique version
+      while (await User.findOne({ custommerId: newCustommerId })) {
+        versionNumber++;
+        newCustommerId = `${generatedCustomerId}_${versionNumber}`;
+      }
+      
+      // Set the generated custommerId
+      generatedCustomerId = newCustommerId;
+    }
+    
+    // Create the new user
     const newUser = new User({
       firstName,
       lastName,
@@ -79,7 +97,7 @@ const SignUp = async (req, res) => {
       phoneNumber,
       password,
       custommerId: generatedCustomerId,
-      device: [],
+      custommerIdVersions: [generatedCustomerId], // Add the first version
     });
 
     await newUser.save();
@@ -89,12 +107,10 @@ const SignUp = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in SignUp:", error);
-    res
-      .status(500)
-      .send({ message: "An error occurred during signup", valid: false });
+    res.status(500).send({ message: "An error occurred during signup", valid: false });
   }
 };
-
+    
 const verifyJWTAndDevice = async (req, res) => {
   const token = req.cookies.auth_token || req?.query?.token
   console.log(token)
