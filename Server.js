@@ -11,17 +11,22 @@ const connectDB = require("./src/DB/db");
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://geocam.skoegle.in",
-      "https://production-client-5ahd.onrender.com",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true, // Allow cookies to be sent with requests
-  })
-);
+const corsOptions = {
+  origin: [
+    "http://localhost:5173",
+    "https://geocam.skoegle.in",
+    "https://production-client-5ahd.onrender.com",
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization", // If your requests include tokens in the header
+  ],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // Explicitly handle preflight OPTIONS requests
 
 app.use("/api", router);
 app.get("/ping",(req,res)=>{
