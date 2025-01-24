@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
   phoneNumber: { type: String, required: true },
   device: { type: Array, default: [] },
   isAdmin: { type: Boolean, default: false },
-  custommerId: { type: String, required: true },
+  custommerId: { type: String },  // This field will store the most recent custommerId
+  custommerIdVersions: { type: [String], default: [] } // Array to store all custommerId versions like "CUST-123_1"
 });
 
 const User = mongoose.model("DraftUser", userSchema);

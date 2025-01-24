@@ -20,8 +20,8 @@ router.put("/user/devices/addDevices/:custommerId",addUserDevices);
 router.get("/user/devices/getdevices",getDevices)
 router.delete("/user/devices/deleteuser/:custommerId",deleteDevices)
 
-router.get("/user/profile/:custommerId",getUserProfile);
-router.put("/user/profile/:custommerId",UpdateUserProfile);
+router.get("/user/profile",verifyDevice,getUserProfile);
+router.put("/user/profile",verifyDevice,UpdateUserProfile);
 router.get("/user/profile/verifi/auth/:custommerId",VerifiPasword)
 
 router.get("/user/admin/device/management/:custommerId",ListCustommerDevices)
