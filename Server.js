@@ -32,6 +32,8 @@ app.use("/api", router);
 app.get("/ping",(req,res)=>{
   res.send({message:"We Got your Request",Loading:false})
 })
+
+
 connectDB();
 
 app.listen(process.env.PORT, () => {

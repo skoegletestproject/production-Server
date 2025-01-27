@@ -9,6 +9,8 @@ const {
 const { addUserDevices, getDevices, deleteDevices } = require("./userDevices/userDevices");
 const { getUserProfile, UpdateUserProfile, VerifiPasword } = require("./Profile/userProfile");
 const { ListCustommerDevices } = require("./UserDeviceManage/Admin");
+const { GetDeviceLogin, DeleteDevice } = require("./Device/device");
+const { GetAllUsersForAdmin, DeleteuserforAdmin } = require("./Device/userMangement");
 const router = express.Router();
 
 router.post("/auth/Signup", SignUp);
@@ -17,8 +19,14 @@ router.get("/auth/user/verif", verifyJWTAndDevice);
 router.get("/auth/user/logout", verifyDevice, logout);
 
 router.put("/user/devices/addDevices/:custommerId",addUserDevices);
-router.get("/user/devices/getdevices",getDevices)
+router.get("/user/devices/getdevices/:custommerId",getDevices)
 router.delete("/user/devices/deleteuser/:custommerId",deleteDevices)
+
+router.get("/devices/users/admin/custommer",verifyDevice,GetDeviceLogin)
+router.delete("/devices/users/admin/custommer/:deviceString",DeleteDevice)
+router.get("/devices/users/admin/custommer/:custommerId",GetAllUsersForAdmin)
+router.delete("/device/admin/custommer/:custommerId",DeleteuserforAdmin)
+
 
 router.get("/user/profile",verifyDevice,getUserProfile);
 router.put("/user/profile",verifyDevice,UpdateUserProfile);
