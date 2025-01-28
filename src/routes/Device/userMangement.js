@@ -3,7 +3,8 @@ const User = require("../../DB/models/User")
 
 
 const GetAllUsersForAdmin = async (req, res) => {
-    const { custommerId } = req.params;
+    const { custommerId } = req.user;
+console.log(custommerId)
     try {
       // Regex to match the custommerId and its variations
       const regex = new RegExp(`^${custommerId}(_\\d+)?$`);

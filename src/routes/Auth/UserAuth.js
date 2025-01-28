@@ -50,7 +50,7 @@ const Login = async (req, res) => {
       sameSite: isProduction ? "Strict" : "Lax",
     });
 
-    res.status(200).send({ message: "Login successful", valid: true, token ,isAdmin:user.isAdmin});
+    res.status(200).send({ message: "Login successful", valid: true, token ,isAdmin:user.isAdmin,custommerId:user?.custommerId});
   } catch (error) {
     console.error("Error in Login:", error);
     res

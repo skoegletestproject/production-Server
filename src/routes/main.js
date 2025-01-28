@@ -23,8 +23,8 @@ router.get("/user/devices/getdevices/:custommerId",getDevices)
 router.delete("/user/devices/deleteuser/:custommerId",deleteDevices)
 
 router.get("/devices/users/admin/custommer",verifyDevice,GetDeviceLogin)
-router.delete("/devices/users/admin/custommer/:deviceString",DeleteDevice)
-router.get("/devices/users/admin/custommer/:custommerId",GetAllUsersForAdmin)
+router.delete("/devices/users/admin/custommer/:deviceString",verifyDevice,DeleteDevice)
+router.get("/devices/users/admin/custommer/myusers",verifyDevice,GetAllUsersForAdmin)
 router.delete("/device/admin/custommer/:custommerId",DeleteuserforAdmin)
 
 
