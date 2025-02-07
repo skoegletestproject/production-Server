@@ -11,6 +11,7 @@ const { getUserProfile, UpdateUserProfile, VerifiPasword } = require("./Profile/
 const { ListCustommerDevices } = require("./UserDeviceManage/Admin");
 const { GetDeviceLogin, DeleteDevice } = require("./Device/device");
 const { GetAllUsersForAdmin, DeleteuserforAdmin } = require("./Device/userMangement");
+const { AddDeviceforRegister, UpdateRegisterddevice,deletedmargDevices,GetAddedDevices, verifuserwithdevice,AddbyAdmin } = require("./registerdevice/adddevices");
 const router = express.Router();
 
 router.post("/auth/Signup", SignUp);
@@ -33,4 +34,15 @@ router.put("/user/profile",verifyDevice,UpdateUserProfile);
 router.get("/user/profile/verifi/auth/:custommerId",VerifiPasword)
 
 router.get("/user/admin/device/management/:custommerId",ListCustommerDevices)
+
+
+router.post("/dmarg/device/add",AddDeviceforRegister)
+router.put("/dmarg/device/update",UpdateRegisterddevice)
+router.delete("/dmarg/device/delete/:id",deletedmargDevices)
+router.get("/dmarg/devices/get/:id",GetAddedDevices)
+
+router.post("/verify/adddevice",verifuserwithdevice)
+router.post("/addbyadmin/device",AddbyAdmin)
+
+
 module.exports = router;

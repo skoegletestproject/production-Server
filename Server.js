@@ -13,7 +13,7 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 const corsOptions = {
   origin: [
-    "http://localhost:5173",
+    "http://localhost:5174",
     "https://geocam.skoegle.in",
     "https://production-client-5ahd.onrender.com",
   ],
