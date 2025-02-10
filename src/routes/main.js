@@ -12,6 +12,7 @@ const { ListCustommerDevices } = require("./UserDeviceManage/Admin");
 const { GetDeviceLogin, DeleteDevice } = require("./Device/device");
 const { GetAllUsersForAdmin, DeleteuserforAdmin } = require("./Device/userMangement");
 const { AddDeviceforRegister, UpdateRegisterddevice,deletedmargDevices,GetAddedDevices, verifuserwithdevice,AddbyAdmin } = require("./registerdevice/adddevices");
+const { DeviceLogs, DeviceRealTime, GetDeviceLogs, GetRealtime } = require("./Vmarg/vmargreq");
 const router = express.Router();
 
 router.post("/auth/Signup", SignUp);
@@ -45,4 +46,8 @@ router.post("/verify/adddevice",verifuserwithdevice)
 router.post("/addbyadmin/device",AddbyAdmin)
 
 
+router.post("/logs",DeviceLogs)
+router.put("/realtime/:deviceName",DeviceRealTime)
+router.get("/find/logs",GetDeviceLogs)
+router.get("/realtime/:deviceName",GetRealtime)
 module.exports = router;
