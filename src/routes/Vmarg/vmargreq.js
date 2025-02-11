@@ -1,6 +1,6 @@
 
-const Log = require("../../DB/models/Vmarg")
-const Realtime = require("../../DB/models/Vmarg")
+
+const {Log,Realtime} = require("../../DB/models/Vmarg")
 
 const DeviceLogs= async (req, res) => {
     try {
@@ -16,6 +16,27 @@ const DeviceLogs= async (req, res) => {
     }
   };
   
+  
+
+const addDeviceRealtime= async (req, res) => {
+    try {
+      const { deviceName, latitude, longitude, date, time } = req.body;
+  
+        const checkdevice = await Realtime.findOne({deviceName})
+        if(checkdevice){
+          return res.send("Device Exists")
+        }
+  
+  
+     
+      const newLog = new Realtime({ deviceName, latitude, longitude, date, time });
+      await newLog.save();
+  
+      res.status(201).json({ message: "Log created successfully", log: newLog });
+    } catch (error) {
+      res.status(500).json({ message: "Error creating log", error });
+    }
+  };
   
   const DeviceRealTime = async (req, res) => {
     try {
@@ -87,4 +108,4 @@ const DeviceLogs= async (req, res) => {
   }
   
 
-  module.exports = {DeviceLogs,DeviceRealTime,GetDeviceLogs,GetRealtime}
+  module.exports = {DeviceLogs,DeviceRealTime,GetDeviceLogs,GetRealtime,addDeviceRealtime}

@@ -50,7 +50,7 @@ const addUserDevices = async (req, res) => {
 };
 
 const getDevices = async (req, res) => {
-    const { custommerId } = req.params;
+    const { custommerId } =  req.user;
 
     try {
         const user = await User.findOne({ custommerId });

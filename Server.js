@@ -16,6 +16,8 @@ const corsOptions = {
     "http://localhost:5174",
     "https://geocam.skoegle.in",
     "https://production-client-5ahd.onrender.com",
+    "http://localhost:5001",
+     "http://localhost:5002"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: [

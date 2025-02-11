@@ -79,47 +79,56 @@ const AddDeviceforRegister = async (req, res) => {
 
   const verifuserwithdevice = async (req, res) => {
     try {
-      const { deviceName, deviceCode, custommerId } = req.body;
-//   console.log(req.body)
+      const { deviceName, deviceCode, custommerId, nickname } = req.body;
+  
       // Step 1: Check if the device exists and matches the provided deviceName and deviceCode
       const device = await Device.findOne({ deviceName, deviceCode });
       if (!device) {
         return res.status(400).json({ error: 'Device not found or incorrect details provided' });
       }
-//   console.log(device)
-      // Step 2: Add the device to the User's device list
+  
+      // Step 2: Find the user by custommerId
       const user = await User.findOne({ custommerId });
       if (!user) {
         return res.status(404).json({ error: 'Customer not found' });
       }
-  console.log(user)
-      // Check if device is already assigned to this user
+  
+      // Check if the device is already assigned to this user
       const isDeviceAssigned = user.device.some(d => d.deviceCode === deviceCode);
       if (isDeviceAssigned) {
         return res.status(400).json({ error: 'Device is already assigned to this customer' });
       }
   
-      // Add device to user's device list
-      user.device.push({ deviceName, deviceCode, nickname: device.nickname || '' });
-      await user.save();
-  
-      // Step 3: Save the device assignment in the customer-device collection
-      const customerDevice = new CustomerDevice({
-        custommerId,
-        // deviceCode,
+      // Add or update the device in the user's device list
+      user.device.push({
         deviceName,
-        nickname: device.nickname || ''
+        deviceCode,
+        nickname: nickname || device.nickname || '',
       });
   
-      await customerDevice.save();
+      await user.save();
+  
+      // Step 3: Save or update the device assignment in the CustomerDevice collection
+      const existingCustomerDevice = await CustomerDevice.findOne({ custommerId, deviceCode });
+      if (existingCustomerDevice) {
+        existingCustomerDevice.nickname = nickname || device.nickname || '';
+        await existingCustomerDevice.save();
+      } else {
+        const customerDevice = new CustomerDevice({
+          custommerId,
+          deviceCode,
+          deviceName,
+          nickname: nickname || device.nickname || '',
+        });
+        await customerDevice.save();
+      }
   
       res.status(200).json({ message: 'Device verified and assigned successfully', user });
     } catch (error) {
       res.status(500).json({ error: 'Failed to verify and assign device', details: error.message });
     }
-  }
-
-
+  };
+  
 
 const AddbyAdmin = async (req, res) => {
     try {

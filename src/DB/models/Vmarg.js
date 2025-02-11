@@ -9,3 +9,5 @@ const logSchema = new mongoose.Schema({
   
 const Log = mongoose.model("Log", logSchema);
 const Realtime = mongoose.model("Realtime", logSchema);
+
+module.exports={Log,Realtime}

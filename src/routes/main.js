@@ -12,7 +12,7 @@ const { ListCustommerDevices } = require("./UserDeviceManage/Admin");
 const { GetDeviceLogin, DeleteDevice } = require("./Device/device");
 const { GetAllUsersForAdmin, DeleteuserforAdmin } = require("./Device/userMangement");
 const { AddDeviceforRegister, UpdateRegisterddevice,deletedmargDevices,GetAddedDevices, verifuserwithdevice,AddbyAdmin } = require("./registerdevice/adddevices");
-const { DeviceLogs, DeviceRealTime, GetDeviceLogs, GetRealtime } = require("./Vmarg/vmargreq");
+const { DeviceLogs, DeviceRealTime, GetDeviceLogs, GetRealtime, addDeviceRealtime } = require("./Vmarg/vmargreq");
 const router = express.Router();
 
 router.post("/auth/Signup", SignUp);
@@ -21,7 +21,7 @@ router.get("/auth/user/verif", verifyJWTAndDevice);
 router.get("/auth/user/logout", verifyDevice, logout);
 
 router.put("/user/devices/addDevices/:custommerId",addUserDevices);
-router.get("/user/devices/getdevices/:custommerId",getDevices)
+router.get("/user/devices/getdevices",verifyDevice,getDevices)
 router.delete("/user/devices/deleteuser/:custommerId",deleteDevices)
 
 router.get("/devices/users/admin/custommer",verifyDevice,GetDeviceLogin)
@@ -50,4 +50,5 @@ router.post("/logs",DeviceLogs)
 router.put("/realtime/:deviceName",DeviceRealTime)
 router.get("/find/logs",GetDeviceLogs)
 router.get("/realtime/:deviceName",GetRealtime)
+router.post("/realtime/logs",addDeviceRealtime)
 module.exports = router;
