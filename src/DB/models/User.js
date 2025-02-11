@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   phoneNumber: { type: String, required: true },
   device: { type: Array, default: [] },
-  isAdmin: { type: Boolean, default: true },
+  isAdmin: { type: Boolean, default: false },
   custommerId: { type: String },  // This field will store the most recent custommerId
   custommerIdVersions: { type: [String], default: [] } // Array to store all custommerId versions like "CUST-123_1"
 });
