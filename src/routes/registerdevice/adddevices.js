@@ -156,10 +156,12 @@ const AddbyAdmin = async (req, res) => {
   }
 
   const deleteDeviceForUser = async (req, res) => {
+
+    console.log(req.body)
     try {
-      const { deviceName, custommerId } = req.body;
-  
-      // Step 1: Remove the device from the User collection
+      const { deviceName } = req.body;
+          const {custommerId} = req.user
+     
       const user = await User.findOne({ custommerId });
       if (!user) {
         return res.status(404).json({ error: 'Customer not found' });

@@ -11,8 +11,11 @@ const { getUserProfile, UpdateUserProfile, VerifiPasword } = require("./Profile/
 const { ListCustommerDevices } = require("./UserDeviceManage/Admin");
 const { GetDeviceLogin, DeleteDevice } = require("./Device/device");
 const { GetAllUsersForAdmin, DeleteuserforAdmin } = require("./Device/userMangement");
-const { AddDeviceforRegister, UpdateRegisterddevice,deletedmargDevices,GetAddedDevices, verifuserwithdevice,AddbyAdmin } = require("./registerdevice/adddevices");
+const { AddDeviceforRegister, UpdateRegisterddevice,deletedmargDevices,GetAddedDevices, verifuserwithdevice,AddbyAdmin, deleteDeviceForUser } = require("./registerdevice/adddevices");
 const { DeviceLogs, DeviceRealTime, GetDeviceLogs, GetRealtime, addDeviceRealtime } = require("./Vmarg/vmargreq");
+const { CreateGeoFencing, GetGeoFencing, UpdateGeoFencing, DeleteGeoFencing } = require("./GeoFencing/geofencing");
+
+
 const router = express.Router();
 
 router.post("/auth/Signup", SignUp);
@@ -41,6 +44,10 @@ router.post("/dmarg/device/add",AddDeviceforRegister)
 router.put("/dmarg/device/update",UpdateRegisterddevice)
 router.delete("/dmarg/device/delete/:id",deletedmargDevices)
 router.get("/dmarg/devices/get/:id",GetAddedDevices)
+router.delete("/dmarg/device/delete",verifyDevice,deleteDeviceForUser)
+
+
+
 
 router.post("/verify/adddevice",verifuserwithdevice)
 router.post("/addbyadmin/device",AddbyAdmin)
@@ -51,4 +58,14 @@ router.put("/realtime/:deviceName",DeviceRealTime)
 router.get("/find/logs",GetDeviceLogs)
 router.get("/realtime/:deviceName",GetRealtime)
 router.post("/realtime/logs",addDeviceRealtime)
+
+
+//Geofencing
+router.post('/device/geofencing', CreateGeoFencing);
+router.get('/geofencing', GetGeoFencing);
+router.put('/geofencing/:id', UpdateGeoFencing);
+router.delete('/geofencing/:id', DeleteGeoFencing);
+
+
+
 module.exports = router;
