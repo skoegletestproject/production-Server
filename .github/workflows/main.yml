@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: my-app
+    env: node
+    plan: free
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm start"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: API_KEY
+        value: I7WjClkzXc4
+    autoDeploy: true
+    repo: https://github.com/skoegletestproject/production-Server.git
+
+jobs:
+  - name: deploy-job
+    schedule: "@daily"
+    script:
+      - curl -X POST "https://api.render.com/deploy/srv-culhm9d2ng1s73asc690?key=I7WjClkzXc4"
