@@ -13,7 +13,7 @@ const { GetDeviceLogin, DeleteDevice } = require("./Device/device");
 const { GetAllUsersForAdmin, DeleteuserforAdmin } = require("./Device/userMangement");
 const { AddDeviceforRegister, UpdateRegisterddevice,deletedmargDevices,GetAddedDevices, verifuserwithdevice,AddbyAdmin, deleteDeviceForUser } = require("./registerdevice/adddevices");
 const { DeviceLogs, DeviceRealTime, GetDeviceLogs, GetRealtime, addDeviceRealtime } = require("./Vmarg/vmargreq");
-const { CreateGeoFencing, GetGeoFencing, UpdateGeoFencing, DeleteGeoFencing } = require("./GeoFencing/geofencing");
+// const { CreateGeoFencing, GetGeoFencing, UpdateGeoFencing, DeleteGeoFencing } = require("./GeoFencing/geofencing");
 
 
 const router = express.Router();
@@ -61,10 +61,10 @@ router.post("/realtime/logs",addDeviceRealtime)
 
 
 //Geofencing
-router.post('/device/geofencing', CreateGeoFencing);
-router.get('/geofencing', GetGeoFencing);
-router.put('/geofencing/:id', UpdateGeoFencing);
-router.delete('/geofencing/:id', DeleteGeoFencing);
+// router.post('/device/geofencing', CreateGeoFencing);
+// router.get('/geofencing', GetGeoFencing);
+// router.put('/geofencing/:id', UpdateGeoFencing);
+// router.delete('/geofencing/:id', DeleteGeoFencing);
 
 
 
