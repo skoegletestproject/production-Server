@@ -15,6 +15,10 @@ services:
 
 jobs:
   - name: deploy-job
+    on:
+      push:
+        branches:
+          - main
     schedule: "@daily"
     script:
       - curl -X POST "https://api.render.com/deploy/srv-culhm9d2ng1s73asc690?key=I7WjClkzXc4"
