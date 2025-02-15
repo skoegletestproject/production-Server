@@ -14,11 +14,12 @@ services:
     repo: https://github.com/skoegletestproject/production-Server.git
 
 jobs:
-  - name: deploy-job
+  deploy-job:
+    runs-on: ubuntu-latest
     on:
       push:
         branches:
           - main
-    schedule: "@daily"
-    script:
-      - curl -X POST "https://api.render.com/deploy/srv-culhm9d2ng1s73asc690?key=I7WjClkzXc4"
+    steps:
+      - name: Deploy to Render
+        run: curl -X POST "https://api.render.com/deploy/srv-culhm9d2ng1s73asc690?key=I7WjClkzXc4"
