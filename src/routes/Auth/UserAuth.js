@@ -112,8 +112,10 @@ const SignUp = async (req, res) => {
 };
     
 const verifyJWTAndDevice = async (req, res) => {
-  const token = req.cookies.auth_token || req?.query?.token
-  console.log(token)
+
+  const authHeader = req.headers.authorization; 
+  const token = authHeader.split(" ")[1] || req?.query?.token
+  // console.log(token)
   try {
     if (!token) {
       return res
