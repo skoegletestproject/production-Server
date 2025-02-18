@@ -4,8 +4,11 @@ const jwt = require("jsonwebtoken");
 const DeviceToken = require("../DB/models/DeviceToken");
 
 const verifyDevice = async (req, res, next) => {
-  const token = req.cookies.auth_token || req?.query?.token
-  console.log(token);
+
+  const authHeader = req?.headers?.authorization; 
+console.log(authHeader?.split(" ")[1])
+  const token = authHeader?.split(" ")[1] || req?.query?.token
+
   try {
     if (!token) {
       return res

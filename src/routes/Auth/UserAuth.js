@@ -42,13 +42,13 @@ const Login = async (req, res) => {
       { expiresIn: "2h" }
     );
 // console.log(token)
-    const isProduction = process.env.NODE_ENV === "production";
-    res.cookie("auth_token", token, {
-      httpOnly: true,
-      secure: isProduction,
-      maxAge: 2 * 60 * 60 * 1000,
-      sameSite: isProduction ? "Strict" : "Lax",
-    });
+    // const isProduction = process.env.NODE_ENV === "production";
+    // res.cookie("auth_token", token, {
+    //   httpOnly: true,
+    //   secure: isProduction,
+    //   maxAge: 2 * 60 * 60 * 1000,
+    //   sameSite: isProduction ? "Strict" : "Lax",
+    // });
 
     res.status(200).send({ message: "Login successful", valid: true, token ,isAdmin:user.isAdmin,custommerId:user?.custommerId});
   } catch (error) {
