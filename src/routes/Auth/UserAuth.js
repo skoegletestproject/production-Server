@@ -8,22 +8,18 @@ const Login = async (req, res) => {
     const { email, password,devicedetails } = req.body;
 // console.log("sdjkfjas",{deviceDetails})
     if(!email || !password||!devicedetails){
-      return res.send({message:"email and  paswword are required"})
+      return res.send({message:"email and  paswword are required",valid:false})
     }
 
 
 
     let user = await User.findOne({ email });
     if (!user) {
-      return res
-        .status(404)
-        .send({ message: "Please create an account", valid: false });
+      return res.send({ message: "Please create an account", valid: false });
     }
 
     if (user.password !== password) {
-      return res
-        .status(401)
-        .send({ message: "Incorrect email or password", valid: false });
+      return res.send({ message: "Incorrect email or password", valid: false });
     }
 
     const deviceString = `DV-${crypto.randomInt(1000000, 9999999)}`;
