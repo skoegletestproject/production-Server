@@ -19,7 +19,9 @@ const corsOptions = {
     "http://localhost:5001",
      "http://localhost:5002",
     "https://prod-vmarg.onrender.com",
-    "https://vmarg.skoegle.com"
+    "https://vmarg.skoegle.com",
+    "http://localhost:5173",
+    "https://production-client-kodt.onrender.com"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: [
