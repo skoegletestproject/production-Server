@@ -68,7 +68,8 @@ const logRequest = (req, res, next) => {
             owner: req.tokenDetails?.owner || 'anonymous'
         };
 
-        const tableName = `Log_${new Date().toISOString().split('T')[0].replace(/-/g, '_')}`;
+        const now = new Date();
+        const tableName = `Log_${now.getFullYear().toString().slice(2)}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}${now.getHours().toString().padStart(2, '0')}${Math.floor(now.getMinutes() / 30) * 30}`;
         const Log = defineLogModel(tableName);
 
         try {
