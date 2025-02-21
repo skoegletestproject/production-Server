@@ -7,6 +7,7 @@ require("dotenv").config();
 
 const router = require("./src/routes/main");
 const connectDB = require("./src/DB/db");
+const logRequest = require("./Loger");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -30,7 +31,7 @@ const corsOptions = {
   ],
   credentials: true,
 };
-
+app.use(logRequest)
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions)); // Explicitly handle preflight OPTIONS requests
 
