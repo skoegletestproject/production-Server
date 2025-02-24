@@ -14,7 +14,10 @@ const { GetAllUsersForAdmin, DeleteuserforAdmin } = require("./Device/userMangem
 const { AddDeviceforRegister, UpdateRegisterddevice,deletedmargDevices,GetAddedDevices, verifuserwithdevice,AddbyAdmin, deleteDeviceForUser } = require("./registerdevice/adddevices");
 const { DeviceLogs, DeviceRealTime, GetDeviceLogs, GetRealtime, addDeviceRealtime } = require("./Vmarg/vmargreq");
 // const { CreateGeoFencing, GetGeoFencing, UpdateGeoFencing, DeleteGeoFencing } = require("./GeoFencing/geofencing");
-
+const { GetLocation,
+  PushVidios,
+  FilterVidios,
+  CheckLive } = require("./Dmarg/Dmarg");
 
 const router = express.Router();
 
@@ -65,6 +68,14 @@ router.post("/realtime/logs",addDeviceRealtime)
 // router.get('/geofencing', GetGeoFencing);
 // router.put('/geofencing/:id', UpdateGeoFencing);
 // router.delete('/geofencing/:id', DeleteGeoFencing);
+
+//Dmarg 
+
+router.post('/dmarg/pushlocation',GetLocation);
+router.post('/dmarg/pushvidios',PushVidios);
+router.get('dmarg/filtervidios',FilterVidios);
+router.get('/dmarg/filterlocation',CheckLive);
+
 
 
 
