@@ -12,34 +12,39 @@ const logRequest = require("./Loger");
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
+
+const allowedOrigins = [
+  "https://geocam.skoegle.in",
+  "https://production-client-5ahd.onrender.com",
+  "https://prod-vmarg.onrender.com",
+  "https://vmarg.skoegle.com",
+  "https://production-client-kodt.onrender.com",
+  "https://dmarg.skoegle.com",
+  "https://d-marg.onrender.com"
+];
+
+// Dynamically allow all localhost origins
 const corsOptions = {
-  origin: [
-    "http://localhost:5174",
-    "https://geocam.skoegle.in",
-    "https://production-client-5ahd.onrender.com",
-    "http://localhost:5001",
-     "http://localhost:5002",
-    "https://prod-vmarg.onrender.com",
-    "https://vmarg.skoegle.com",
-    "http://localhost:5173",
-    "https://production-client-kodt.onrender.com"
-  ],
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin) || /^http:\/\/localhost:\d+$/.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: [
-    "Content-Type",
-    "Authorization", // If your requests include tokens in the header
-  ],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
 };
-app.use(logRequest)
+
+app.use(logRequest);
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions)); // Explicitly handle preflight OPTIONS requests
 
 app.use("/api", router);
-app.get("/ping",(req,res)=>{
-  res.send({message:"We Got your Request",Loading:false})
-})
-
+app.get("/ping", (req, res) => {
+  res.send({ message: "We Got your Request", Loading: false });
+});
 
 connectDB();
 
