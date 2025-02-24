@@ -8,7 +8,7 @@ const sequelize = new Sequelize(process.env.POSTGRES_URL, {
         rejectUnauthorized: false
       }
     },
-    logging: true
+    logging: false
   });
 
 const defineLogModel = (tableName) => {

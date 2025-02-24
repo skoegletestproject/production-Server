@@ -73,8 +73,8 @@ router.post("/realtime/logs",addDeviceRealtime)
 
 router.post('/dmarg/pushlocation',GetLocation);
 router.post('/dmarg/pushvidios',PushVidios);
-router.get('dmarg/filtervidios',FilterVidios);
-router.get('/dmarg/filterlocation',CheckLive);
+router.get('/dmarg/filtervidios',FilterVidios);
+router.get('/dmarg/checklive',CheckLive);
 
 
 
