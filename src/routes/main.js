@@ -72,7 +72,7 @@ router.post("/realtime/logs",addDeviceRealtime)
 //Dmarg 
 
 router.post('/dmarg/pushlocation',GetLocation);
-router.post('/dmarg/pushvidios',PushVidios);
+router.post('/dmarg/pushvideos',PushVidios);
 router.get('/dmarg/filtervidios',FilterVidios);
 router.get('/dmarg/checklive',CheckLive);
 
