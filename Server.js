@@ -46,6 +46,12 @@ app.get("/ping", (req, res) => {
   res.send({ message: "We Got your Request", Loading: false });
 });
 
+
+app.post('/post-route', (req, res) => {
+  console.log(req.body);
+  res.send(req.body);
+});
+
 connectDB();
 
 app.listen(process.env.PORT, () => {
