@@ -7,7 +7,7 @@ const logSchema = new mongoose.Schema({
     time: { type: String, required: true }  // Format: "HH:MM:SS"
   });
   
-const Log = mongoose.model("Log", logSchema);
-const Realtime = mongoose.model("Realtime", logSchema);
+const Log = mongoose.model("VmargLogs", logSchema);
+const Realtime = mongoose.model("VmargRealtime", logSchema);
 
 module.exports={Log,Realtime}
