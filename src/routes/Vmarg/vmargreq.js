@@ -10,8 +10,8 @@ const DeviceLogs = async (req, res) => {
    
     const { deviceName, latitude, longitude, date, time } = req.body;
     const geoFencings = await GeoFencing.findOne({ deviceName });
-    const fixedLat = geoFencings.latitude;
-    const fixedLong = geoFencings.longitude;
+    const fixedLat = geoFencings?.latitude;
+    const fixedLong = geoFencings?.longitude;
     const distance = haversineDistance(fixedLat, fixedLong, latitude, longitude);
     let geofencing = { activated: false, status: "inside" };
     if (distance > 1) {
