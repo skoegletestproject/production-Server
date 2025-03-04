@@ -36,7 +36,7 @@ const DeviceLogs = async (req, res) => {
       { new: true, upsert: true }
     );
 
-    res.status(201).json({ message: "Log created successfully", log: newLog, distance, geofencing });
+    res.status(201).json({ geofencing });
   } catch (error) {
     res.status(500).json({ message: "Error creating log", error });
   }
