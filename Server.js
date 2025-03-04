@@ -20,7 +20,8 @@ const allowedOrigins = [
   "https://vmarg.skoegle.com",
   "https://production-client-kodt.onrender.com",
   "https://dmarg.skoegle.com",
-  "https://d-marg.onrender.com"
+  "https://d-marg.onrender.com",
+  "https://v-marg2-0.onrender.com"
 ];
 
 // Dynamically allow all localhost origins
