@@ -17,6 +17,7 @@
     "crypto": "^1.0.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "haversine-skoegle": "^1.1.0",
     "install": "^0.13.0",
     "jsonwebtoken": "^9.0.2",
     "mb64-connect": "^2.0.8",

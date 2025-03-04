@@ -1,21 +1,47 @@
 
-
+const GeoFencing = require("../../DB/models/GeoFencing");
 const {Log,Realtime} = require("../../DB/models/Vmarg")
+const haversineDistance = require("haversine-skoegle")
 
-const DeviceLogs= async (req, res) => {
-    try {
-      const { deviceName, latitude, longitude, date, time } = req.body;
-  
-      // Create a new log entry
-      const newLog = new Log({ deviceName, latitude, longitude, date, time });
-      await newLog.save();
-  
-      res.status(201).json({ message: "Log created successfully", log: newLog });
-    } catch (error) {
-      res.status(500).json({ message: "Error creating log", error });
+let geofencingStatus = {}; 
+
+const DeviceLogs = async (req, res) => {
+  try {
+   
+    const { deviceName, latitude, longitude, date, time } = req.body;
+    const geoFencings = await GeoFencing.findOne({ deviceName });
+    const fixedLat = geoFencings.latitude;
+    const fixedLong = geoFencings.longitude;
+    const distance = haversineDistance(fixedLat, fixedLong, latitude, longitude);
+    let geofencing = { activated: false, status: "inside" };
+    if (distance > 1) {
+      if (!geofencingStatus[deviceName] || geofencingStatus[deviceName] === "inside") {
+        console.log(`🚨 Geofencing Activated: Device ${deviceName} moved out of 1 km range!`);
+        geofencing = { activated: true, status: "outside" };
+      }
+      geofencingStatus[deviceName] = "outside";
+    } else {
+      if (geofencingStatus[deviceName] === "outside") {
+        console.log(`✅ Geofencing Deactivated: Device ${deviceName} is back inside the 1 km range.`);
+        geofencing = { activated: true, status: "inside" };
+      }
+      geofencingStatus[deviceName] = "inside";
     }
-  };
-  
+    const newLog = new Log({ deviceName, latitude, longitude, date, time });
+    await newLog.save();
+
+    await Realtime.findOneAndUpdate(
+      { deviceName },
+      { latitude, longitude, date, time },
+      { new: true, upsert: true }
+    );
+
+    res.status(201).json({ message: "Log created successfully", log: newLog, distance, geofencing });
+  } catch (error) {
+    res.status(500).json({ message: "Error creating log", error });
+  }
+};
+
   
 
 const addDeviceRealtime= async (req, res) => {
