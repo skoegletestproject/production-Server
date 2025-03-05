@@ -54,6 +54,14 @@ app.post('/post-route', (req, res) => {
   res.send(req.body);
 });
 
+
+app.get('/post-route', (req, res) => {
+
+  console.log(req.query);
+  res.send(req.query);
+});
+
+
 connectDB();
 
 app.listen(process.env.PORT, () => {
