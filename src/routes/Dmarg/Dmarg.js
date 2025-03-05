@@ -53,18 +53,26 @@ const PushVidios= async (req, res) => {
 }
 
 // **GET /find**
-const FilterVidios= async (req, res) => {
+const FilterVidios = async (req, res) => {
     try {
-        const { fromdate, todate, fromtime, totime, deviceName  } = req.query;
+        const { fromdate, todate, fromtime, totime, deviceName } = req.query;
 
         if (!fromdate || !todate) {
             return res.status(400).json({ message: "Both fromdate and todate are required" });
         }
 
+     
         const query = { date: { $gte: fromdate, $lte: todate } };
+
         if (fromtime && totime) {
-            query.$and = [{ fromtime: { $gte: fromtime } }, { totime: { $lte: totime } }];
+    
+
+            query.$and = [
+                { fromtime: { $gte: fromtime } },
+                { totime: { $lte: totime } }
+            ];
         }
+
         if (deviceName) {
             query.deviceName = deviceName;
         }
@@ -75,6 +83,7 @@ const FilterVidios= async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 }
+
 
 
 
