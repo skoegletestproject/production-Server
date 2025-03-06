@@ -12,8 +12,8 @@ const DeviceLogs = async (req, res) => {
     const geoFencings = await GeoFencing.findOne({ deviceName });
     const fixedLat = geoFencings?.latitude;
     const fixedLong = geoFencings?.longitude;
+    let geofencing = { activated: false, status: "inside",fixedLat,fixedLong };
     const distance = haversineDistance(fixedLat, fixedLong, latitude, longitude);
-    let geofencing = { activated: false, status: "inside" };
     if (distance > 1) {
       if (!geofencingStatus[deviceName] || geofencingStatus[deviceName] === "inside") {
         console.log(`🚨 Geofencing Activated: Device ${deviceName} moved out of 1 km range!`);
@@ -23,7 +23,7 @@ const DeviceLogs = async (req, res) => {
     } else {
       if (geofencingStatus[deviceName] === "outside") {
         console.log(`✅ Geofencing Deactivated: Device ${deviceName} is back inside the 1 km range.`);
-        geofencing = { activated: true, status: "inside" };
+        geofencing = { activated: true, status: "inside",fixedLat,fixedLong };
       }
       geofencingStatus[deviceName] = "inside";
     }
@@ -35,8 +35,9 @@ const DeviceLogs = async (req, res) => {
       { latitude, longitude, date, time },
       { new: true, upsert: true }
     );
+const location ={latitude:newLog.latitude,longitude:newLog.longitude,distance}
 
-    res.status(201).json({ geofencing });
+    res.status(201).json({message:"Logs Created", geofencing,location});
   } catch (error) {
     res.status(500).json({ message: "Error creating log", error });
   }

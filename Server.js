@@ -55,10 +55,8 @@ app.post('/post-route', (req, res) => {
 });
 
 
-app.get('/post-route', (req, res) => {
-
-  console.log(req.query);
-  res.send(req.query);
+app.get('/', (req, res) => {
+res.send("manoj")
 });
 
 
