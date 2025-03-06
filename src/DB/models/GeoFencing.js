@@ -16,7 +16,17 @@ const geoFencingSchema = new mongoose.Schema({
     longitude: {
         type: Number,
         required: true
-    }
+    },
+    radius: { 
+         type: Number,
+         required: true,
+          default: 1 
+        },
+    lastTriggered: {
+         type: String,
+          enum: ["inside", "outside", null], 
+          default: null 
+        }
 });
 
 const GeoFencing = mongoose.model('GeoFencing', geoFencingSchema);
