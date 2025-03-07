@@ -23,7 +23,7 @@ const allowedOrigins = [
   "https://d-marg.onrender.com",
   "https://v-marg2-0.onrender.com",
   "https://vmarg2.0.skoegle.com",
-  "https://enabled-glider-sweeping.ngrok-free.app"
+  "https://ram-obliging-pup.ngrok-free.app/test"
 ];
 
 // Dynamically allow all localhost origins
