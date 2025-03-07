@@ -4,18 +4,23 @@ const {Log,Realtime} = require("../../DB/models/Vmarg")
 const haversineDistance = require("haversine-skoegle")
 const DeviceLogs = async (req, res) => {
   try {
-    const { deviceName, latitude, longitude, date, time } = req.body;
+    const { deviceName, latitude, longitude, date, time, homelat, homelong, rad } = req.body;
 
-    // Fetch geofencing data for the device
-    const geoFencings = await GeoFencing.findOne({ deviceName });
+    // Update or create geofencing data
+    const geoFencings = await GeoFencing.findOneAndUpdate(
+      { deviceName },
+      { latitude: homelat, longitude: homelong, radius: rad },
+      { new: true, upsert: true }
+    );
+
     if (!geoFencings) {
       return res.status(404).json({ message: "Geofencing data not found for device" });
     }
 
     const { latitude: fixedLat, longitude: fixedLong, radius, lastTriggered } = geoFencings;
+    const distance = haversineDistance(fixedLat, fixedLong, latitude, longitude);
 
     let geofencing = { activated: false, status: lastTriggered, fixedLat, fixedLong };
-    const distance = haversineDistance(fixedLat, fixedLong, latitude, longitude);
 
     if (distance > radius) {
       if (lastTriggered === "inside" || lastTriggered === null) {
@@ -23,15 +28,15 @@ const DeviceLogs = async (req, res) => {
         geofencing = { activated: true, status: "outside" };
         await GeoFencing.findOneAndUpdate({ deviceName }, { lastTriggered: "outside" });
       }
-    } else {
-      if (lastTriggered === "outside") {
-        console.log(`✅ Geofencing Deactivated: Device ${deviceName} is back inside the ${radius} km range.`);
-        geofencing = { activated: true, status: "inside", fixedLat, fixedLong };
-        await GeoFencing.findOneAndUpdate({ deviceName }, { lastTriggered: "inside" });
-      }
+    } else if (lastTriggered === "outside") {
+      console.log(`✅ Geofencing Deactivated: Device ${deviceName} is back inside the ${radius} km range.`);
+      geofencing = { activated: true, status: "inside", fixedLat, fixedLong };
+      await GeoFencing.findOneAndUpdate({ deviceName }, { lastTriggered: "inside" });
     }
+
     const newLog = new Log({ deviceName, latitude, longitude, date, time });
     await newLog.save();
+
     await Realtime.findOneAndUpdate(
       { deviceName },
       { latitude, longitude, date, time },
@@ -45,7 +50,6 @@ const DeviceLogs = async (req, res) => {
     res.status(500).json({ message: "Error creating log", error });
   }
 };
-
 const addDeviceRealtime= async (req, res) => {
     try {
       const { deviceName, latitude, longitude, date, time } = req.body;

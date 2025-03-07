@@ -13,7 +13,7 @@ const { GetDeviceLogin, DeleteDevice } = require("./Device/device");
 const { GetAllUsersForAdmin, DeleteuserforAdmin } = require("./Device/userMangement");
 const { AddDeviceforRegister, UpdateRegisterddevice,deletedmargDevices,GetAddedDevices, verifuserwithdevice,AddbyAdmin, deleteDeviceForUser } = require("./registerdevice/adddevices");
 const { DeviceLogs, DeviceRealTime, GetDeviceLogs, GetRealtime, addDeviceRealtime } = require("./Vmarg/vmargreq");
-const { CreateGeoFencing, GetGeoFencing, UpdateGeoFencing, DeleteGeoFencing } = require("./GeoFencing/geofencing");
+const { CreateGeoFencing, GetGeoFencing, UpdateGeoFencing, DeleteGeoFencing ,SetGeofencing} = require("./GeoFencing/geofencing");
 const { GetLocation,
   PushVidios,
   FilterVidios,
@@ -68,6 +68,7 @@ router.post('/device/geofencing', CreateGeoFencing);
 router.get('/geofencing/:deviceName', GetGeoFencing);
 router.put('/geofencing/:deviceName', UpdateGeoFencing);
 router.delete('/geofencing/:deviceName', DeleteGeoFencing);
+router.post("/geofencing/:deviceName",SetGeofencing);
 
 //Dmarg 
 

@@ -54,7 +54,13 @@ console
 };
 
 
-
+const SetGeofencing =  async (req, res) => {
+    const { deviceName } = req.params;
+    const {radius } = req.body;
+      console.log(radius)
+   const geoFencing = await GeoFencing.findOneAndUpdate({ deviceName }, { radius }, { new: true });
+   res.send(geoFencing)       
+} 
 
 
 const DeleteGeoFencing= async (req, res) => {
@@ -70,4 +76,4 @@ const DeleteGeoFencing= async (req, res) => {
     }
 };
 
-module.exports={CreateGeoFencing,GetGeoFencing,UpdateGeoFencing,DeleteGeoFencing}
+module.exports={CreateGeoFencing,GetGeoFencing,UpdateGeoFencing,DeleteGeoFencing,SetGeofencing}
