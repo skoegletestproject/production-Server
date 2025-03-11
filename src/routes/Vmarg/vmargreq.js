@@ -2,11 +2,12 @@
 const GeoFencing = require("../../DB/models/GeoFencing");
 const {Log,Realtime} = require("../../DB/models/Vmarg")
 const haversineDistance = require("haversine-skoegle")
+
+
+
 const DeviceLogs = async (req, res) => {
   try {
     const { deviceName, latitude, longitude, date, time, homelat, homelong, rad } = req.body;
-
-    // Update or create geofencing data
     const geoFencings = await GeoFencing.findOneAndUpdate(
       { deviceName },
       { latitude: homelat, longitude: homelong, radius: rad },

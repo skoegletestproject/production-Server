@@ -6,7 +6,7 @@ const crypto = require("crypto");
 const Login = async (req, res) => {
   try {
     const { email, password,devicedetails } = req.body;
-// console.log("sdjkfjas",{deviceDetails})
+
     if(!email || !password||!devicedetails){
       return res.send({message:"email and  paswword are required",valid:false})
     }
@@ -38,13 +38,13 @@ const Login = async (req, res) => {
       { expiresIn: "2h" }
     );
 // console.log(token)
-    // const isProduction = process.env.NODE_ENV === "production";
-    // res.cookie("auth_token", token, {
-    //   httpOnly: true,
-    //   secure: isProduction,
-    //   maxAge: 2 * 60 * 60 * 1000,
-    //   sameSite: isProduction ? "Strict" : "Lax",
-    // });
+    const isProduction = process.env.NODE_ENV === "production";
+    res.cookie("auth_token", token, {
+      httpOnly: true,
+      secure: isProduction,
+      maxAge: 2 * 60 * 60 * 1000,
+      sameSite: isProduction ? "Strict" : "Lax",
+    });
 
     res.status(200).send({ message: "Login successful", valid: true, token ,isAdmin:user.isAdmin,custommerId:user?.custommerId});
   } catch (error) {

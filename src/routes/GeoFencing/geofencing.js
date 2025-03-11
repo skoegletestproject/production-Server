@@ -54,7 +54,7 @@ console
 };
 
 
-const SetGeofencing =  async (req, res) => {
+const SetRadius =  async (req, res) => {
     const { deviceName } = req.params;
     const {radius } = req.body;
       console.log(radius)
