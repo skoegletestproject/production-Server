@@ -76,4 +76,4 @@ const DeleteGeoFencing= async (req, res) => {
     }
 };
 
-module.exports={CreateGeoFencing,GetGeoFencing,UpdateGeoFencing,DeleteGeoFencing,SetGeofencing}
+module.exports={CreateGeoFencing,GetGeoFencing,UpdateGeoFencing,DeleteGeoFencing}

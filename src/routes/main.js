@@ -68,7 +68,7 @@ router.post('/device/geofencing', CreateGeoFencing);
 router.get('/geofencing/:deviceName', GetGeoFencing);
 router.put('/geofencing/:deviceName', UpdateGeoFencing);
 router.delete('/geofencing/:deviceName', DeleteGeoFencing);
-router.post("/geofencing/:deviceName",SetGeofencing);
+// router.post("/geofencing/:deviceName",SetGeofencing);
 
 //Dmarg 
 
