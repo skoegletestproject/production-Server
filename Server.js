@@ -56,18 +56,11 @@ app.post('/post-route', (req, res) => {
 });
 
 
-app.get('/', (req, res) => {
 
-console.log(req.query);
-  res.send(req.query)
-});
 
 app.get('/:name/:firstname', (req, res) => {
-
-
-
   console.log(req.params);
-    res.send(req.params)
+    res.send({parames:req?.params,quary:req?.query})
   });
   
 
