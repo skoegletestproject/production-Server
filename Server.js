@@ -57,8 +57,12 @@ app.post('/post-route', (req, res) => {
 
 
 app.get('/', (req, res) => {
-res.send("manoj")
+
+console.log(req.query);
+  res.send(req.query)
 });
+
+
 
 
 connectDB();
