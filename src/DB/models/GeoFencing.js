@@ -26,6 +26,16 @@ const geoFencingSchema = new mongoose.Schema({
          type: String,
           enum: ["inside", "outside", null], 
           default: null 
+        },
+        main:{
+            type: Number,
+            required: true,
+            default: 2
+        },
+        battery:{
+            type: Number,
+            required: true,
+            default: 2
         }
 });
 

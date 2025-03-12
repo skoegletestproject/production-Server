@@ -1,7 +1,8 @@
 const GeoFencing = require("../../DB/models/GeoFencing");
 
 const CreateGeoFencing= async (req, res) => {
-    const { customerId, deviceName, latitude, longitude } = req.body;
+    const { deviceName, latitude, longitude } = req.body;
+    const {custommerId:customerId} = req.user 
 
 
 const findDevice = await GeoFencing.findOne({ deviceName });
@@ -31,6 +32,22 @@ console.log(deviceName)
     }
 };
 
+
+
+const SetGeofencing = async (req, res) => {
+    const { deviceName ,radius} = req.params;
+    console.log(deviceName,radius)
+    try {
+        const geoFencing = await GeoFencing.findOneAndUpdate({
+            deviceName
+        },{radius}, { new: true, runValidators: true });
+
+        res.send({radius:geoFencing.radius});
+    } catch (error) {
+        res
+            .status(500)
+            .json({ message: "Error setting geofencing", error });
+    }}
 
 const UpdateGeoFencing = async (req, res) => {
     const { deviceName } = req.params;
@@ -76,4 +93,4 @@ const DeleteGeoFencing= async (req, res) => {
     }
 };
 
-module.exports={CreateGeoFencing,GetGeoFencing,UpdateGeoFencing,DeleteGeoFencing}
+module.exports={CreateGeoFencing,GetGeoFencing,UpdateGeoFencing,DeleteGeoFencing,SetGeofencing}

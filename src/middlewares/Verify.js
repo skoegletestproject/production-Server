@@ -33,7 +33,7 @@ console.log(authHeader?.split(" ")[1])
         .status(401)
         .send({ message: "Unauthorized: Invalid DeviceToken", valid: false });
     }
-
+console.log(custommerId, deviceString)
     req.user = { custommerId, deviceString };
     next();
   } catch (error) {

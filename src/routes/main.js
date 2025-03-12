@@ -64,11 +64,11 @@ router.post("/realtime/logs",addDeviceRealtime)
 
 
 //Geofencing
-router.post('/device/geofencing', CreateGeoFencing);
+router.post('/device/geofencing',verifyDevice ,CreateGeoFencing);
 router.get('/geofencing/:deviceName', GetGeoFencing);
 router.put('/geofencing/:deviceName', UpdateGeoFencing);
-router.delete('/geofencing/:deviceName', DeleteGeoFencing);
-// router.post("/geofencing/:deviceName",SetGeofencing);
+router.delete('/geofencing/:deviceName',verifyDevice, DeleteGeoFencing);
+router.put("/geofencing/:deviceName/:radius",SetGeofencing);
 
 //Dmarg 
 
