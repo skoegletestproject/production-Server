@@ -1,8 +1,8 @@
 
 const GeoFencing = require("../../DB/models/GeoFencing");
 const {Log,Realtime} = require("../../DB/models/Vmarg")
-const haversineDistance = require("haversine-skoegle")
-const sendEmail = require("./sendEmail") 
+const haversineDistance = require("haversine-skoegle");
+const Alert = require("./Alert");
 
 
 const DeviceLogs = async (req, res) => {
@@ -72,7 +72,7 @@ const DeviceLogs = async (req, res) => {
     console.log(geofencing?.status, geofencing?.activated);
     
     if(geofencing?.activated) {
-      await sendEmail("manojgowdabr89@gmail.com", "Geofencing Alert", `Device ${deviceName} has moved ${geofencing?.status} the ${distance} km range!`);
+       Alert(deviceName, geofencing?.status, distance,latitude,longitude);
       return res.status(201).json({ message: "Logs Created", geofencing, location });
     }
 
